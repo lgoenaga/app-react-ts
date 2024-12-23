@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEventHandler} from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Randomfox } from "../components/randomfox";
@@ -16,16 +16,14 @@ useEffect(() => {
 	setImages([{ id: zorro(), url: img }]);
 }, []);
 
-	const addImage = () => {
-		const newImage = {
+	const addImage: MouseEventHandler<HTMLButtonElement> = (event) => {
+		event.preventDefault();
+		const newImage: Imageitem = {
 			id: zorro(),
 			url: `https://randomfox.ca/images/${zorro()}.jpg`,
 		};
-		setImages((images) => [
-			...images,
-			newImage,
-		]);
-	}
+		setImages((images) => [...images, newImage]);
+	};
 
 	return (
 		<div>
@@ -36,9 +34,10 @@ useEffect(() => {
 			</Head>
 			<main>
         <button
-          onClick={() => {
-						addImage();
-          }}
+		  		onClick={(event) => {
+						addImage(event);
+		  			}
+					}
           className="mb-4 p-2 bg-blue-500 text-white rounded"
         >
           Add Image
