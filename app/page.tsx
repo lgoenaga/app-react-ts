@@ -14,6 +14,17 @@ const Home: NextPage = () => {
 		{ id: zorro(), url: img },
 
 	]);
+
+	const addImage = () => {
+		setImages((prev) => [
+			...prev,
+			{
+				id: zorro(),
+				url: `https://randomfox.ca/images/${zorro()}.jpg`,
+			},
+		]);
+	}
+
 	return (
 		<div>
 			<Head>
@@ -24,12 +35,7 @@ const Home: NextPage = () => {
 			<main>
         <button
           onClick={() => {
-			const newImage: Imageitem = {
-			  id: zorro(),
-			  url: `https://randomfox.ca/images/${zorro()}.jpg`,
-			};
-			const newImages = [newImage];
-            setImages([...images, ...newImages]);
+						addImage();
           }}
           className="mb-4 p-2 bg-blue-500 text-white rounded"
         >
