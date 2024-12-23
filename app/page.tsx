@@ -1,27 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Randomfox } from "../components/randomfox";
 type Imageitem = { id: number,  url: string };
 
 const Home: NextPage = () => {
-	const zorro = (): number => Math.floor(Math.random() * 123) + 1;
-  const img = `https://randomfox.ca/images/${zorro()}.jpg`;
+const zorro = (): number => Math.floor(Math.random() * 123) + 1;
 
-	const [images, setImages] = useState<Imageitem[]>([
-		{ id: zorro(), url: img },
+const [images, setImages] = useState<Imageitem[]>([]);
 
-	]);
+useEffect(() => {
+	const img = `https://randomfox.ca/images/${zorro()}.jpg`;
+	setImages([{ id: zorro(), url: img }]);
+}, []);
 
 	const addImage = () => {
-		setImages((prev) => [
-			...prev,
-			{
-				id: zorro(),
-				url: `https://randomfox.ca/images/${zorro()}.jpg`,
-			},
+		const newImage = {
+			id: zorro(),
+			url: `https://randomfox.ca/images/${zorro()}.jpg`,
+		};
+		setImages((images) => [
+			...images,
+			newImage,
 		]);
 	}
 
