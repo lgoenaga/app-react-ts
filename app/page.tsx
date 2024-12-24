@@ -8,18 +8,22 @@ type Imageitem = { id: number; url: string };
 
 const Home: NextPage = () => {
 	const zorro = (): number => Math.floor(Math.random() * 123) + 1;
-
 	const [images, setImages] = useState<Imageitem[]>([]);
+
+	//Generar un id unique para cada imagen
+	const generateUniqueId = (): number => {
+		return Date.now() + Math.floor(Math.random() * 1000);
+	};
 
 	useEffect(() => {
 		const img = `https://randomfox.ca/images/${zorro()}.jpg`;
-		setImages([{ id: zorro(), url: img }]);
+		setImages([{ id: generateUniqueId(), url: img }]);
 	}, []);
 
 	const addImage: MouseEventHandler<HTMLButtonElement> = (event) => {
 		event.preventDefault();
 		const newImage: Imageitem = {
-			id: zorro(),
+			id: generateUniqueId(),
 			url: `https://randomfox.ca/images/${zorro()}.jpg`,
 		};
 		setImages((images) => [...images, newImage]);
@@ -46,7 +50,10 @@ const Home: NextPage = () => {
 					<div key={image.id} className="p-4">
 						<LazyImage
 							image={image.url}
-							onClick={() => "Clic en la imagen"}
+							rel="preload"
+							onClick={() => {
+								console.log("click en la imagen");
+							}}
 							width={320}
 							height="auto"
 							className="rounded bg-gray-400"
